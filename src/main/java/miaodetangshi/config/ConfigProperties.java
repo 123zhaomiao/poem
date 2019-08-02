@@ -15,6 +15,7 @@ public class ConfigProperties {
     private String dbUrl;
     private String dbDriverClass;
 
+
     public ConfigProperties(){
         //从外部文件加载
         InputStream inputStream = ConfigProperties.class.getClassLoader()
@@ -33,7 +34,5 @@ public class ConfigProperties {
         this.dbPassword = String.valueOf(p.get("db.password"));
         this.dbDriverClass = String.valueOf(p.get("db.driver_class"));
         this.dbUrl = String.valueOf(p.get("db.url"));
-
-
     }
 }

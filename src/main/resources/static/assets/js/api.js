@@ -16,32 +16,23 @@ function creationRanking(id) {
         success: function (data, status, xhr) {
             //echarts图表对象
             var myChart = echarts.init(document.getElementById(id));
-
             var options = {
-                //图标的标题
-                title: {
-                    text: '唐诗创作排行榜'
-                },
-
                 tooltip: {},
                 //柱状图的提示信息
                 legend: {
-                    data: ['数量(首)']
+                    data: ['首']
                 },
-                //X轴的数据：作者姓名
                 xAxis: {
-                    data: []
+                    data:[]
                 },
-                //Y轴的数据：创作的数量
-                yAxis: {},
+                yAxis: {
+                },
                 series: [{
                     name: '创作数量',
-                    type: 'bar',
-                    data: []
+                    type: 'line',
+                    data:[]
                 }]
             };
-
-            //List<AuthorCount>
             for (var i=0; i< data.length; i++) {
                 var authorCount  = data[i];
                 options.xAxis.data.push(authorCount.author);
@@ -54,6 +45,7 @@ function creationRanking(id) {
         }
     });
 }
+
 
 function cloudWorld(id) {
     $.get({
@@ -99,7 +91,7 @@ function cloudWorld(id) {
                     data: []
                 }]
             };
-            for (var i=0 ;i<data.length; i++) {
+            for (var i=0 ;i< data.length; i++) {
                 var wordCount = data[i];
                 //wordCount => 词 ： 词频
                 options.series[0].data.push({

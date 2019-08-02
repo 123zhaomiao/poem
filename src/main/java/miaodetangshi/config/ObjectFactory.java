@@ -17,9 +17,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class ObjectFactory {
+    //单例模式 饿汗
     private static final ObjectFactory instance = new ObjectFactory();
-
     private  final Map<Class,Object> objectHashMap = new HashMap<>();
+
     private ObjectFactory(){
         //1.初始化配置对象
         initConfigProperties();
@@ -33,8 +34,10 @@ public final class ObjectFactory {
 
     private void initWebController() {
         DataSource dataSource = getObject(DataSource.class);
+
         AnalyzeDao analyzeDao= new AnalyzeDaoImpl(dataSource);
         AnalyzeService anaylzeService = new AnaylzeServiceImpl(analyzeDao);
+
         WebController webController = new WebController(anaylzeService);
         objectHashMap.put(WebController.class,webController);
     }
@@ -42,6 +45,7 @@ public final class ObjectFactory {
     private void initCrawler() {
         ConfigProperties configProperties = getObject(ConfigProperties.class);
         DataSource dataSource = getObject(DataSource.class);
+
         final Page page = new Page(
                 configProperties.getCrawlerBase(),
                 configProperties.getCrawlerPath(),
@@ -56,11 +60,14 @@ public final class ObjectFactory {
         crawler.addPipeline(new DatabasePipeline(dataSource));
         //2.3 将此页面加入到page中
         crawler.addPage(page);
+
         objectHashMap.put(Crawler.class,crawler);
     }
 
     private void initDatabase() {
+
         ConfigProperties configProperties = getObject(ConfigProperties.class);
+
         DruidDataSource dataSource = new DruidDataSource();
         dataSource.setUsername(configProperties.getDbUsername());
         dataSource.setPassword(configProperties.getDbPassword());
@@ -79,19 +86,12 @@ public final class ObjectFactory {
     public static ObjectFactory getInstance(){
         return instance;
     }
-    public <T>T getObject(Class classz){
+
+    public <T> T getObject(Class classz){
         if(!objectHashMap.containsKey(classz)){
             throw new IllegalArgumentException("Class" + classz.getName()+
             "not found object");
         }
         return (T)objectHashMap.get(classz);
     }
-//    private void printObjectList(){
-//        System.out.println("====ObjectFactory====");
-//        for(Map.Entry<Class,Object> entry:objectHashMap.entrySet()){
-//            System.out.println(String.format("\t[%s]==>[%s]",
-//                    entry.getKey().getCanonicalName(),
-//                    entry.getValue().getClass().getCanonicalName()));
-//        }
-//    }
 }

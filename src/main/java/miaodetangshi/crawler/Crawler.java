@@ -6,7 +6,6 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import miaodetangshi.crawler.common.Page;
 import miaodetangshi.crawler.parse.Parse;
 import miaodetangshi.crawler.pipeline.Pipeline;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -18,7 +17,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Logger;
 
 /**
  * 爬虫调度窗口
@@ -33,22 +31,11 @@ public class Crawler {
 
     //所有的解析器
     private List<Parse> parseList = new LinkedList<>();
-    //所有的管道(清洗器)
+    //所有的清洗器
     private List<Pipeline> pipelineList = new LinkedList<>();
+
     //线程调度器
     private final ExecutorService executorService;
-
-    public void addPage(Page page){
-        this.docQueue.add(page);
-    }
-    public void addPipeline(Pipeline pipeline){
-        this.pipelineList.add(pipeline);
-    }
-    public void addParse(Parse parse){
-        this.parseList.add(parse);
-    }
-
-
 
     public Crawler() {
         this.webClient = new WebClient(BrowserVersion.CHROME);
@@ -64,7 +51,18 @@ public class Crawler {
                 return thread;
             }
         });
+
     }
+    public void addPage(Page page){
+        this.docQueue.add(page);
+    }
+    public void addPipeline(Pipeline pipeline){
+        this.pipelineList.add(pipeline);
+    }
+    public void addParse(Parse parse){
+        this.parseList.add(parse);
+    }
+
     public void start(){
         //submit(Runnable对象)
         //1.爬取、解析
@@ -80,6 +78,7 @@ public class Crawler {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
             //1.从未被处理的页面中出队列一个准备进行爬取
             final Page page = Crawler.this.docQueue.poll();
             if (page == null) {
@@ -89,6 +88,7 @@ public class Crawler {
             this.executorService.submit(() -> {
                 try {
                     //2.1 根据url取得页面
+                    //采集
                     HtmlPage htmlPage = Crawler.this.webClient.getPage(page.getUrl());
                     page.setHtmlPage(htmlPage);
                     //2.2 给解析器解析、解析器有两个、根据页面判断用何种方法解析
@@ -126,7 +126,7 @@ public class Crawler {
                 continue;
             }
             this.executorService.submit(() -> {
-                //2.进行解析、相当于输出操作
+                //2.进行解析
                 for(Pipeline pipeline:Crawler.this.pipelineList){
                     pipeline.pipeline(page);
                 }

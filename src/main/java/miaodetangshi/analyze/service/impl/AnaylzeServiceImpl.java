@@ -17,7 +17,6 @@ public class AnaylzeServiceImpl implements AnalyzeService {
         this.analyzeDao = analyzeDao;
     }
 
-
     @Override
     public List<AuthorCount> analyzeAuthorCount() {
         //此处结果并未排序
@@ -40,7 +39,9 @@ public class AnaylzeServiceImpl implements AnalyzeService {
         //4.统计k—v k是词 v是频率
         Map<String,Integer> map = new HashMap<>();
         List<PoetryInfo> poetryInfos = analyzeDao.queryAllPoetryInfo();
+
         for(PoetryInfo poetryInfo:poetryInfos){
+
             List<Term> terms = new ArrayList<>();
             String title = poetryInfo.getTitle();
             String content = poetryInfo.getContent();
@@ -52,7 +53,8 @@ public class AnaylzeServiceImpl implements AnalyzeService {
             while(iterator.hasNext()){
                 Term term = iterator.next();
                 //过滤掉词性为w或者词性为null的值
-                if(term.getNatureStr() == null || term.getNatureStr().equals("w")){
+                if(term.getNatureStr() == null ||
+                        term.getNatureStr().equals("w")){
                     iterator.remove();
                     continue;
                 }
@@ -61,8 +63,10 @@ public class AnaylzeServiceImpl implements AnalyzeService {
                     iterator.remove();
                     continue;
                 }
+
                 String realName = term.getRealName();
                 Integer count = 0 ;
+
                 if(map.containsKey(realName)){
                    count =  map.get(realName)+1;
                 }else{
