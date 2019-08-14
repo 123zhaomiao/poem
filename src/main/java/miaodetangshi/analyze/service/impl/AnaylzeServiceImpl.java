@@ -22,12 +22,12 @@ public class AnaylzeServiceImpl implements AnalyzeService {
         //此处结果并未排序
         //排序方式1、DAO层用语句排序2、在业务层对List集合进行排序
         List<AuthorCount> authorCounts =  analyzeDao.analyzeAuthorCount();
-//        authorCounts.sort(new Comparator<AuthorCount>() {
-//            @Override
-//            public int compare(AuthorCount o1, AuthorCount o2) {
-//                return -o1.getCount().compareTo(o2.getCount());
-//            }
-//        });
+        authorCounts.sort(new Comparator<AuthorCount>() {
+            @Override
+            public int compare(AuthorCount o1, AuthorCount o2) {
+                return -o1.getCount().compareTo(o2.getCount());
+            }
+        });
         return authorCounts;
     }
 

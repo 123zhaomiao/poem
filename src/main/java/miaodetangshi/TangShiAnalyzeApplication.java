@@ -11,7 +11,7 @@ public class TangShiAnalyzeApplication {
                 ObjectFactory.getInstance().getObject(WebController.class);
         //运行web接口
         webController.lauch();
-        //启动爬虫
+        webController.lauch1();
         if(args.length ==  1 && args[0].equals("run") ) {
             Crawler crawler = ObjectFactory.getInstance().getObject(Crawler.class);
             crawler.start();

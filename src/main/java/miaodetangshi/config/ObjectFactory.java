@@ -46,10 +46,10 @@ public final class ObjectFactory {
         ConfigProperties configProperties = getObject(ConfigProperties.class);
         DataSource dataSource = getObject(DataSource.class);
 
-        final Page page = new Page(
-                configProperties.getCrawlerBase(),
-                configProperties.getCrawlerPath(),
-                configProperties.isCrawlerDetail());
+        final Page page;
+        page = new Page(configProperties.getCrawlerBase(),
+                configProperties.getCrawlerPath()
+        ,configProperties.isCrawlerDetail());
 
         //2.new一个爬虫的调度器
         Crawler crawler = new Crawler();

@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AnalyzeDaoImpl implements AnalyzeDao {
+public class  AnalyzeDaoImpl implements AnalyzeDao {
     private final DataSource dataSource;
 
     public AnalyzeDaoImpl(DataSource dataSource) {
@@ -22,8 +22,7 @@ public class AnalyzeDaoImpl implements AnalyzeDao {
     @Override
     public List<AuthorCount> analyzeAuthorCount() {
         List<AuthorCount> datas = new ArrayList<>();
-//        String sql = " select count(*) as count ,author from poetry_info group by author;";
-        String sql = " select count(*) as count ,author from info group by author;";
+        String sql = " select count(*) as count ,author from poetry_info group by author;";
         try(Connection connection = dataSource.getConnection();
             PreparedStatement statement =
                 connection.prepareStatement(sql);
@@ -44,8 +43,7 @@ public class AnalyzeDaoImpl implements AnalyzeDao {
     @Override
     public List<PoetryInfo> queryAllPoetryInfo() {
         List<PoetryInfo> datas = new ArrayList<>();
-//        String sql = " select title,dynasty,author,content from poetry_info;";
-        String sql = " select title,dynasty,author,content from info;";
+        String sql = " select title,dynasty,author,content from poetry_info;";
         try(Connection connection = dataSource.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet rs = statement.executeQuery()

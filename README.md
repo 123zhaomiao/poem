@@ -7,16 +7,11 @@
  - 采集网页内容，利用htmlunit工具进行数据解析之后存入MySQL数据库中
  - 通过分析数据得出诗人与创作数量的对应关系
  - 利用ansj中文分词技术分析出古文中热度较高的词
-## 项目效果
-这是仅展示部分
-![](images/Author_Count.png)
-![](images/mulitWord.png)
 
 ## 项目测试
-- 功能测试采用黑盒测试和白盒测试相结合
+- 对单个模块进行功能测试
 - 通过代码对数据库连接池的特性进行测试
 ![](images/test1.PNG)
-- 多个浏览器进行兼容性测试
-![](images/test2.PNG)
+
 ## 项目详情
 更多项目详情，请点击:https://blog.csdn.net/zhao_miao/article/details/96735745

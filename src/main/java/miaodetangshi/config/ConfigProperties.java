@@ -1,10 +1,10 @@
 package miaodetangshi.config;
 
-import lombok.Data;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-@Data
+
 public class ConfigProperties {
     private String crawlerBase;
     private String crawlerPath;
@@ -34,5 +34,33 @@ public class ConfigProperties {
         this.dbPassword = String.valueOf(p.get("db.password"));
         this.dbDriverClass = String.valueOf(p.get("db.driver_class"));
         this.dbUrl = String.valueOf(p.get("db.url"));
+    }
+
+    public String getCrawlerBase() {
+        return crawlerBase;
+    }
+
+    public String getCrawlerPath() {
+        return crawlerPath;
+    }
+
+    public boolean isCrawlerDetail() {
+        return crawlerDetail;
+    }
+
+    public String getDbUsername() {
+        return dbUsername;
+    }
+
+    public String getDbPassword() {
+        return dbPassword;
+    }
+
+    public String getDbUrl() {
+        return dbUrl;
+    }
+
+    public String getDbDriverClass() {
+        return dbDriverClass;
     }
 }
