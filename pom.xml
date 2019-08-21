@@ -74,13 +74,6 @@
             </exclusions>
         </dependency>
 
-        <!--基于jetty 嵌入式Java Web容器开发的Web应用框架-->
-        <dependency>
-            <groupId>com.sparkjava</groupId>
-            <artifactId>spark-core</artifactId>
-            <version>2.3</version>
-        </dependency>
-
         <!--字符串转对象或者对象转字符串-->
         <dependency>
             <groupId>com.google.code.gson</groupId>
