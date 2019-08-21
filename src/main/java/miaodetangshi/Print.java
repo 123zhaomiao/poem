@@ -1,4 +1,4 @@
-package miaodetangshi.web;
+package miaodetangshi;
 
 import miaodetangshi.analyze.model.AuthorCount;
 import miaodetangshi.analyze.model.WordCount;
@@ -8,17 +8,16 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class WebController {
+public class Print {
     private final AnalyzeService analyzeService;
 
-    public WebController(AnalyzeService analyzeService) {
+    public Print(AnalyzeService analyzeService) {
         this.analyzeService = analyzeService;
     }
 
     public List<AuthorCount> analyzeAuthorCount(){
         return analyzeService.analyzeAuthorCount();
     }
-
     public List<WordCount> analyzeWordCount(){
         return analyzeService.analyzeWordCount();
     }

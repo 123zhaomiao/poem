@@ -22,9 +22,7 @@ public class DatabasePipeline  implements Pipeline{
         String title = (String)page.getDataSet().getData("title");
         String content = (String)page.getDataSet().getData("content");
 
-
-//        String sql = "insert into poetry_info(title,dynasty,author,content) values(?,?,?,?)";
-        String sql = "insert into info(title,dynasty,author,content) values(?,?,?,?)";
+        String sql = "insert into poetry_info(title,dynasty,author,content) values(?,?,?,?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)
         ) {

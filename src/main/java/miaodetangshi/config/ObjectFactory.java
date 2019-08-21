@@ -10,7 +10,7 @@ import miaodetangshi.crawler.common.Page;
 import miaodetangshi.crawler.parse.DataPageParse;
 import miaodetangshi.crawler.parse.DocumentParse;
 import miaodetangshi.crawler.pipeline.DatabasePipeline;
-import miaodetangshi.web.WebController;
+import miaodetangshi.Print;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
@@ -28,39 +28,36 @@ public final class ObjectFactory {
         initDatabase();
         //3.爬虫对象
         initCrawler();
-        //4.web对象
-        initWebController();
+        //4.打印
+        initPrint();
     }
-
-    private void initWebController() {
+    private void initPrint() {
         DataSource dataSource = getObject(DataSource.class);
 
         AnalyzeDao analyzeDao= new AnalyzeDaoImpl(dataSource);
         AnalyzeService anaylzeService = new AnaylzeServiceImpl(analyzeDao);
 
-        WebController webController = new WebController(anaylzeService);
-        objectHashMap.put(WebController.class,webController);
+        Print print = new Print(anaylzeService);
+        objectHashMap.put(Print.class, print);
     }
-
     private void initCrawler() {
         ConfigProperties configProperties = getObject(ConfigProperties.class);
         DataSource dataSource = getObject(DataSource.class);
 
-        final Page page;
-        page = new Page(configProperties.getCrawlerBase(),
+        final Page page = new Page(configProperties.getCrawlerBase(),
                 configProperties.getCrawlerPath()
         ,configProperties.isCrawlerDetail());
 
         //2.new一个爬虫的调度器
         Crawler crawler = new Crawler();
-        //2.1 添加解析器 分为详情页的解析和超链接页的解析
+        //将页面加入到page中
+        crawler.addPage(page);
+
+        //添加解析器 分为详情页的解析和超链接页的解析
         crawler.addParse(new DocumentParse());
         crawler.addParse(new DataPageParse());
 
         crawler.addPipeline(new DatabasePipeline(dataSource));
-        //2.3 将此页面加入到page中
-        crawler.addPage(page);
-
         objectHashMap.put(Crawler.class,crawler);
     }
 

@@ -8,10 +8,9 @@ import miaodetangshi.crawler.parse.Parse;
 import miaodetangshi.crawler.pipeline.Pipeline;
 
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -33,16 +32,14 @@ public class Crawler {
     private List<Parse> parseList = new LinkedList<>();
     //所有的清洗器
     private List<Pipeline> pipelineList = new LinkedList<>();
-
     //线程调度器
     private final ExecutorService executorService;
-
     public Crawler() {
         this.webClient = new WebClient(BrowserVersion.CHROME);
         this.webClient.getOptions().setJavaScriptEnabled(false);
 
         //初始化线程池为固定大小的线程池
-        this.executorService = Executors.newFixedThreadPool(10, new ThreadFactory() {
+        this.executorService = Executors.newFixedThreadPool(20, new ThreadFactory() {
             private  final AtomicInteger id = new AtomicInteger(0);
             @Override
             public Thread newThread(Runnable r) {
@@ -64,13 +61,13 @@ public class Crawler {
     }
 
     public void start(){
-        //submit(Runnable对象)
         //1.爬取、解析
         this.executorService.submit(this::parse);
         //2.清理
         this.executorService.submit(this::pipeline);
     }
-    //爬虫的具体实现
+
+    //解析
     private void parse(){
         while (true) {
             try {
@@ -120,6 +117,7 @@ public class Crawler {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
             //1.从处理过的页面中取出一个页面
             final Page page = this.detailQueue.poll();
             if(page == null){
@@ -133,6 +131,7 @@ public class Crawler {
             });
         }
     }
+
     public void stop(){
         //停止爬虫
         if(this.executorService!=null && this.executorService.isShutdown()){

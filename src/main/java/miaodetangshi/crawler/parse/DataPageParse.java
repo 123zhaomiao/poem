@@ -37,7 +37,6 @@ public class DataPageParse implements Parse {
             page.getDataSet().putData("dynasty",dynasty);
             page.getDataSet().putData("author",author);
             page.getDataSet().putData("content",content);
-
         }
     }
 }

@@ -5,8 +5,10 @@ import miaodetangshi.analyze.entity.PoetryInfo;
 import miaodetangshi.analyze.model.AuthorCount;
 import miaodetangshi.analyze.model.WordCount;
 import miaodetangshi.analyze.service.AnalyzeService;
+import org.ansj.domain.Result;
 import org.ansj.domain.Term;
 import org.ansj.splitWord.analysis.NlpAnalysis;
+import org.ansj.splitWord.analysis.ToAnalysis;
 
 import java.util.*;
 
@@ -65,7 +67,7 @@ public class AnaylzeServiceImpl implements AnalyzeService {
                 }
 
                 String realName = term.getRealName();
-                Integer count = 0 ;
+                Integer count;
 
                 if(map.containsKey(realName)){
                    count =  map.get(realName)+1;

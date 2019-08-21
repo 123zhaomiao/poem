@@ -12,8 +12,9 @@ public class DocumentParse implements Parse{
             return;
         }
         HtmlPage htmlPage = page.getHtmlPage();
-        htmlPage.getBody().getElementsByAttribute("div",
-                "class","typecont")
+        htmlPage.getBody().
+                getElementsByAttribute("div",
+                        "class","typecont")
                 .forEach(htmlElement -> {
                         DomNodeList<HtmlElement> aNodeList =
                                 htmlElement.getElementsByTagName("a");

@@ -1,10 +1,12 @@
 package miaodetangshi.config;
 
 
+import lombok.Data;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-
+@Data
 public class ConfigProperties {
     private String crawlerBase;
     private String crawlerPath;
